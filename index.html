@@ -1,0 +1,53 @@
+<!-- Comp 20 Fall 2020
+    HW 9 JSON Set List
+    Eliza Encherman
+    -->
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>SetList JSON</title>
+        <script>
+            var data, setList;
+            function loadSetList() {
+                request = new XMLHttpRequest();
+                document.write("request created");
+                request.open("GET", "setList.js", true);
+                document.write(" request opened");
+                request.onreadystatechange = function (params) {
+                    document.write(" checking ready state");
+                    if (request.readyState == 4 && request.status == 200) {
+                        data = request.responseText;
+                        setList = JSON.parse(data);
+                        document.write(setList);
+                        //displaySongs();
+                    }
+                }
+            }
+
+
+            function displaySongs(params) {
+                var display;
+                var choice = document.getElementsByTagName("select")[0].selectedIndex;
+                var genres = document.getElementsByTagName("option");
+                if (choice == 0) {
+                    for (let index = 0; index < songs.setList.length; index++) {
+                        display += songs.setList[index].song;
+                        display += "<br>";
+                    }
+                }
+                document.getElementById("jukebox").innerHTML = display;
+            }
+        </script>
+    </head>
+    <body onload="loadSetList()">
+        <div id="listDisplay"></div>
+        <div id="jukebox"></div>
+        <form id="chooseGenre" onsubmit="displaySongs(); return false;">
+            <select>
+            </select>
+            <input type="submit" value="Filter">
+        </form>
+    </body>
+</html>
