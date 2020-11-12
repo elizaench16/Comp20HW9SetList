@@ -1,0 +1,197 @@
+<!-- Comp 20 Fall 2020
+    HW 9 JSON Set List
+    Eliza Encherman
+    -->
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>SetList JSON</title>
+        <style type="text/css">
+            .song {
+                text-decoration: underline;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="listDisplay"></div>
+        <div id="jukebox"></div>
+        <form id="chooseGenre">
+            <select id="genreOptions">
+            </select>
+            <input type="submit" value="Filter">
+        </form>
+    </body>
+    <script>
+        /* var data, setList;
+        function loadSetList() {
+            request = new XMLHttpRequest();
+            document.write("request created");
+            request.open("GET", "setList.js", true);
+            document.write(" request opened");
+            request.onreadystatechange = function (params) {
+                document.write(" checking ready state");
+                if (request.readyState == 4 && request.status == 200) {
+                    data = request.responseText;
+                    setList = JSON.parse(data);
+                    document.write(setList);
+                    //displaySongs();
+                }
+            }
+        }
+        */
+        setList = { "songs" : [
+            {
+                "song"      : "Imagine",
+                "artist"    : "John Lennon",
+                "genre"     : "Rock",
+                "year"      : "1971"
+            },
+            {
+                "song"      : "Respect",
+                "artist"    : "Aretha Franklin",
+                "genre"     : "Rhythm and Blues",
+                "year"      : "1967"
+            },
+            {
+                "song"      : "Yesterday",
+                "artist"    : "The Beatles",
+                "genre"     : "Rock",
+                "year"      : "1965"
+            },
+            {
+                "song"      : "Stairway to Heaven",
+                "artist"    : "Led Zeppelin",
+                "genre"     : "Rock",
+                "year"      : "1957"
+            },
+            {
+                "song"      : "The Boxer",
+                "artist"    : "Simon and Garfunkel",
+                "genre"     : "Folk",
+                "year"      : "1969"
+            },
+            {
+                "song"      : "Born to Be Wild",
+                "artist"    : "Steppenwolf",
+                "genre"     : "Rock",
+                "year"      : "1968"
+            },
+            {
+                "song"      : "Eleanor Rigby",
+                "artist"    : "The Beatles",
+                "genre"     : "Rock",
+                "year"      : "1966"
+            },
+            {
+                "song"      : "Great Balls of Fire",
+                "artist"    : "Jerry Lee Lewis",
+                "genre"     : "Rock",
+                "year"      : "1957"
+            },
+            {
+                "song"      : "Bohemian Rhapsody",
+                "artist"    : "Queen",
+                "genre"     : "Rock",
+                "year"      : "1975"
+            },
+            {
+                "song"      : "Rehab",
+                "artist"    : "Amy Winehouse",
+                "genre"     : "Rhythm and Blues",
+                "year"      : "2007"
+            }]
+        }
+
+        var listObj,
+            genreArray = Array(),
+            songsToDisplay,
+            displayString = document.getElementById("listDisplay"),
+            jukeboxDiv = document.getElementById("jukebox"),
+            genreDropdown = document.getElementById("genreOptions"),
+            genreForm = document.getElementById("chooseGenre");
+
+        function doStuff() {
+            basicDisplay();
+            makeSelect();
+            /*
+            genreForm.onsubmit = function () {
+                var chosen = genreDropdown[0].value;
+                for (let index = 0; index < listObj.songs.length; index++) {
+                    if (listObj.songs[index].genre == chosen) {
+                        songsToDisplay.push(listObj.songs[index]);
+                    }
+                }
+            }
+            */
+        }
+
+        doStuff();
+
+        function makeSelect() {
+            genreArray.push("All");
+            makeOption("All");
+            for (let i = 0; i < listObj.songs.length; i++) {
+                if (!genreArray.includes(listObj.songs[i].genre)) {
+                    genreArray.push(listObj.songs[i].genre);
+                    makeOption(listObj.songs[i].genre);
+                }
+            }
+        }
+
+        function makeOption(genre) {
+            thisGenre = document.createElement("option");
+            genreDropdown.appendChild(thisGenre);
+            thisGenre.innerHTML = genre;
+        }
+
+        function basicDisplay() {
+            stringList = JSON.stringify(setList);
+            displayString.innerHTML = stringList;
+            listObj = JSON.parse(stringList);
+            filter("All");
+        }
+
+        function filter(genre) {
+            var displaySongs;
+            if (genre == "All") {
+                displaySongs = listObj.songs;
+            } else {
+                displaySongs = Array();
+                for (let index = 0; index < listObj.songs.length; index++) {
+                    if (listObj.songs[index].genre == genre) {
+                        displaySongs.push(listObj.songs[index]);
+                    }
+                }
+            }
+            alert(genre);
+            for (let index = 0; index < displaySongs.length; index++) {
+                songDiv = document.createElement("div");
+                jukeboxDiv.appendChild(songDiv);
+
+                pSong = document.createElement("p");
+                pDetails = document.createElement("p");
+
+                songDiv.appendChild(pSong);
+                songDiv.appendChild(pDetails);
+
+                pSong.class = "song";
+
+                var thisSong = displaySongs[index];
+                pSong.innerHTML = thisSong.song;
+                pDetails.innerHTML = thisSong.artist + "<br>" +
+                                     thisSong.genre + "<br>" +
+                                     thisSong.year + "<br>";
+            }
+        }
+
+        body.onload = function () {
+            genreDropdown.addEventListener("change", function () {
+                alert("selected" + genreArray[genreDropdown[0].selectedIndex]);
+
+                filter(genreArray[genreDropdown.selectedIndex]);
+            });
+        }
+    </script>
+</html>
