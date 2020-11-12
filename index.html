@@ -187,9 +187,7 @@
         }
 
         body.onload = function () {
-            genreDropdown.addEventListener("change", function () {
-                alert("selected" + genreArray[genreDropdown[0].selectedIndex]);
-
+            genreForm.addEventListener("submit", function () {
                 filter(genreArray[genreDropdown.selectedIndex]);
             });
         }
